@@ -201,20 +201,26 @@ img {
 
 .form-new-task {
     width: auto;
-    border: solid silver 2px;
+    border-bottom: solid silver 2px;
 }
 
 .fieldset-new-task {
+    display: flex;
+    flex: 1;
     border: none;
 }
 
 .input-new-task {
     border-radius: 16px;
-    border: solid var(--blueberry-sweet) 2px;
+    border: none;
+    background-color: whitesmoke;
     text-align: center;
     font-size: 25px;
+    width: auto;
+}
 
-    /* each new entry should stick to the top */
+.input-new-task:focus {
+    border: solid silver 1px;
 }
 
 .task-station-container {

@@ -19,7 +19,8 @@ export default function createTask() {
     const pLabel = document.createElement('p');
     const newTaskInput = document.createElement('input');
     newTaskInput.classList.add('input-new-task');
-    newTaskInput.type = 'text';
+    newTaskInput.type = 'textarea';
+    newTaskInput.placeholder = 'new task...';
 
     const newTaskLabelTitle = document.createElement('label');
     newTaskLabelTitle.htmlFor = 'task-input-id';
