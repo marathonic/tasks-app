@@ -38,25 +38,43 @@ export default function createProject() {
 
         //or push to array, and then forEach project, append and style
         const projectsArray = [];
-        projectsArray.id = 'projects-array';
+        // projectsArray.id = 'projects-array';
         projectsArray.push(newProject);
+
+        //our iterator variable for naming divs and newPanels
+
+        let i = 0;
 
         projectsArray.forEach(proj => {
             const newDiv = document.createElement('div');
-            newDiv.id = proj.textContent + 'proj-id';
+            // newDiv.id = proj.textContent + 'proj-id';
+            
+            //Set id to i 
+            const newPanel = document.createElement('div');
+            newDiv.id = i;
+            proj.id = `${proj.textContent}-${i}`;
+            newPanel.id = 'new-panel-' + i;
+            console.log(newPanel);
+            ++i;
+
             newDiv.classList.add('new-project-div');
             newDiv.appendChild(proj);
             document.querySelector('#projects-wrapper').appendChild(newDiv);
             //pushing to project names array!
-            projectNames.push(`${proj.textContent}-project`);
+            projectNames.push(`${proj.id}`);
             console.log('projectNames array on next line')
             console.log(projectNames);
+            console.log('projectsArray on the next line');
+            console.log(projectsArray);
 
             //make projects splash page:
             const mainPanel = document.querySelector('#main-panel-id');
-            const newPanel = document.createElement('div');
+
+            
             newPanel.classList.add('new-panel');
-            newPanel.id = 'new-panel-id';
+            // newPanel.id = 'new-panel-id';
+            
+            
             const newPanelTitleDiv = document.createElement('div');
             newPanelTitleDiv.classList.add('new-panel-title-div');
             const newPanelTitle = document.createElement('p');
