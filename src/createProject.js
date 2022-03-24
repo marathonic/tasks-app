@@ -15,6 +15,11 @@ export default function createProject() {
         newProjectInput.value = '';
 
     }
+
+    //AN ARRAY THAT WE WILL PUSH ALL PROJECT NAMES TO
+    //in plain text format, so that we can link the name 
+    //in the array to the id element of the documentFragment  
+    const projectNames = [];
     
     cancelProjectButton.addEventListener('click', function(){
         hideButtons();
@@ -42,7 +47,10 @@ export default function createProject() {
             newDiv.classList.add('new-project-div');
             newDiv.appendChild(proj);
             document.querySelector('#projects-wrapper').appendChild(newDiv);
-
+            //pushing to project names array!
+            projectNames.push(`${proj.textContent}-project`);
+            console.log('projectNames array on next line')
+            console.log(projectNames);
 
             //make projects splash page:
             const mainPanel = document.querySelector('#main-panel-id');
@@ -72,6 +80,14 @@ export default function createProject() {
             newTaskBtn.id = 'new-task-btn-id';
             newTaskBtn.innerHTML = 'Make new task';
 
+            //make TEST DOCUMENT FRAGMENTS btn
+
+            const testDocumentFragments = document.createElement('button');
+            testDocumentFragments.innerHTML = 'TEST REMOVE DOCUMENT FRAGMENTS';
+
+            const testDocumentRepaste = document.createElement('button');
+            testDocumentRepaste.innerHTML = 'TEST REPASTE DOCUMENT FRAGMENT';
+
             //MAKE A DIV TO HOLD THE BUTTON AND NEW TASKS BAR
             const taskStationContainer = document.createElement('div');
             taskStationContainer.classList.add('task-station-container');
@@ -80,10 +96,42 @@ export default function createProject() {
 
             taskStationContainer.appendChild(newTaskBtn);
             
+            newProjectBtn.parentElement.appendChild(testDocumentFragments);
+
+            newProjectBtn.parentElement.appendChild(testDocumentRepaste);
+            //>>>>>>>>>>>>>>>>>>>
+
+            //newPanel should be a new documentFragment
+            //for each new project.
+            //then put the documentFragments all in an array
+            //and when we click a Project div, 
+            //match the project's name from our projectNames array
+            //to load its fragment, stored by the same name in our
+            //fragments array. 
+            const fragmentsArray = [];
+            
             newPanel.appendChild(taskStationContainer)
+            const newFragment = document.createDocumentFragment();
+            newFragment.appendChild(newPanel);
+            fragmentsArray.push(newPanel);
+
+            mainPanel.appendChild(newFragment);
+            mainPanel.appendChild(fragmentsArray[0])
+            
+            console.log('fragmentsArray on next line');
+            console.log(fragmentsArray);
 
             newTaskBtn.addEventListener('click', function() {
                 createTask();
+            })
+
+            testDocumentFragments.addEventListener('click', function(){
+                let throwaway = mainPanel.removeChild(fragmentsArray[0]);
+            })
+
+            testDocumentRepaste.addEventListener('click', function() {
+                // mainPanel.appendChild(newPanel);
+                mainPanel.appendChild(fragmentsArray[0]);
             })
 
         }

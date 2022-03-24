@@ -17,6 +17,9 @@ export default function createTask() {
     taskFieldset.classList.add('fieldset-new-task');
     const pInput = document.createElement('p');
     const pLabel = document.createElement('p');
+
+    //let's try autogrowing textareas
+    //first we ant to put everything in a div
     const newTaskInput = document.createElement('input');
     newTaskInput.classList.add('input-new-task');
     newTaskInput.type = 'textarea';
@@ -46,7 +49,7 @@ export default function createTask() {
     //and then append it on the index file?
     return taskForm;
 }
-
+    
 
 export function getTaskInfo() {
     //get the form info upon detecting a submit event. Put into array?
