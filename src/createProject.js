@@ -32,11 +32,11 @@ export default function createProject() {
         const newProject = document.createElement('p');
         newProject.textContent = newProjectInput.value;
 
-        //append this newProject to the Projects Div and add style
+        //add style
 
         newProject.classList.add('projects');
 
-        //or push to array, and then forEach project, append and style
+        //push to array, and then forEach project, append and style
         const projectsArray = [];
         // projectsArray.id = 'projects-array';
         projectsArray.push(newProject);
@@ -50,29 +50,36 @@ export default function createProject() {
             // newDiv.id = proj.textContent + 'proj-id';
             
             //Set id to i 
-            const newPanel = document.createElement('div');
-            newDiv.id = i;
-            proj.id = `${proj.textContent}-${i}`;
-            newPanel.id = 'new-panel-' + i;
-            console.log(newPanel);
+            proj.id = `${proj.textContent}-proj-id`;
             ++i;
-
+            
             newDiv.classList.add('new-project-div');
             newDiv.appendChild(proj);
             document.querySelector('#projects-wrapper').appendChild(newDiv);
             //pushing to project names array!
-            projectNames.push(`${proj.id}`);
+            projectNames.push(`${proj.textContent}`);
             console.log('projectNames array on next line')
             console.log(projectNames);
-            console.log('projectsArray on the next line');
-            console.log(projectsArray);
+            
+            
 
+
+
+            //Create Panels: 
+            //for each item in the array to which our divs push,
+            //create a panel and attach its title and button, etc.
+
+            projectNames.forEach(projName => {
+            
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //<<<<<<<<<<<<<<<BEGIN HERE>>>>>>>>>>>>>>>>>>
+            
             //make projects splash page:
             const mainPanel = document.querySelector('#main-panel-id');
-
+            const newPanel = document.createElement('div');
             
             newPanel.classList.add('new-panel');
-            // newPanel.id = 'new-panel-id';
             
             
             const newPanelTitleDiv = document.createElement('div');
@@ -86,7 +93,7 @@ export default function createProject() {
             /////////////
             //Prevent repeats: if the new panel is empty, attach.
 
-            if(mainPanel.hasChildNodes() === false) {
+            
 
                 newPanel.appendChild(newPanelTitleDiv);
                 mainPanel.appendChild(newPanel);
@@ -96,6 +103,10 @@ export default function createProject() {
             const newTaskBtn = document.createElement('button');
             newTaskBtn.classList.add('new-task-btn');
             newTaskBtn.id = 'new-task-btn-id';
+
+            let k = 0;
+            newPanel.id = 'new-panel-' + k;
+            ++k;
             newTaskBtn.innerHTML = 'Make new task';
 
             //make TEST DOCUMENT FRAGMENTS btn
@@ -131,10 +142,17 @@ export default function createProject() {
             newPanel.appendChild(taskStationContainer)
             const newFragment = document.createDocumentFragment();
             newFragment.appendChild(newPanel);
-            fragmentsArray.push(newPanel);
+            
+            //<<<!!!!!!!THIS IS HOW WE RETRIEVE THE PANELS!!!!>>>
+            //Depending on which project div you clicked,
+            //either by its id or by its place on the array,
+            //Just do mainPanel.appendChild(fragmentsArray[i]);
 
+            fragmentsArray.push(newPanel);
+            
+            fragmentsArray.id = 'fragments-array';
             mainPanel.appendChild(newFragment);
-            mainPanel.appendChild(fragmentsArray[0])
+            mainPanel.appendChild(fragmentsArray[fragmentsArray.length -1])
             
             console.log('fragmentsArray on next line');
             console.log(fragmentsArray);
@@ -143,8 +161,21 @@ export default function createProject() {
                 createTask();
             })
 
+            //HEY!!! Just put this inside of each div!
+            //add it to the project div's event listener,
+            //so that when we click it, it automatically erases
+            //anything that is in the main panel, and immediately after,
+            //also paste the testDocumentRepaste anonymous function,
+            //which appends the currently clicked div!
+
             testDocumentFragments.addEventListener('click', function(){
-                let throwaway = mainPanel.removeChild(fragmentsArray[0]);
+                // let throwaway = mainPanel.removeChild(fragmentsArray[0]);
+                const docCont = document.querySelector('#main-panel-id');
+                let docChild = docCont.lastElementChild;
+                while (docChild) {
+                    docCont.removeChild(docChild);
+                    docChild = docCont.lastElementChild;
+                }
             })
 
             testDocumentRepaste.addEventListener('click', function() {
@@ -152,11 +183,53 @@ export default function createProject() {
                 mainPanel.appendChild(fragmentsArray[0]);
             })
 
-        }
+
         });
 
-        hideButtons();
+            ///////////////////////<<<<<<<<<<<<<
+            /////////////THIS REMOVES THE PROJECT SHOWN CURRENTLY
+            //WE'RE CALLING THE FUNCTION OUTSIDE OF THIS BLOCK THO
+            function divJam() {
 
+                //using event delegation to select the parent element
+
+                const wrappy = document.querySelector('#projects-wrapper');
+                wrappy.addEventListener('click', function(e){
+                    if(e.target.classList === 'projects'){
+                        alert('I clicked a project div');
+                    }
+                })
+
+                //WHAT THE FUUUUCKKKKKKKKKKKKKKK
+                //WE HAD ALREADY SOLVED FOR THE i COUNTER
+                //NOW IT'S AS IF WE NEVER TOUCHED IT
+                //WHAT THE FUCK HAPPENED?????
+                //
+
+                // const newDiv = document.querySelector('.new-project-div');
+                // newDiv.addEventListener('click', function() {
+                //     alert('ok');
+                //     let throwaway = mainPanel.removeChild(fragmentsArray[0]);
+        
+                //  })
+            };
+            
+            
+            divJam();
+
+            let projectLinks = document.querySelectorAll('.new-project-div');
+            projectLinks.forEach(function(check) {
+                check.addEventListener('click', checkIndex);
+            })
+
+            function checkIndex(evt){
+                // console.log( Array.from(projectLinks).indexOf(evt.target) );
+                console.log(evt.target);
+            }
+        }
+        );
+
+        hideButtons();
     })
 
     // const newProjectTitle = document.createElement('p');

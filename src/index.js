@@ -7,4 +7,3 @@ import switchToProj from './switchToProject.js';
 document.body.appendChild(printHome());
 
 createProject();
-

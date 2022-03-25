@@ -17,9 +17,28 @@
 //and so a if div gets id = 1, the project that is created
 //for it in that same second, will get id = 1, however,
 //ids must be unique. So we could match id '1' to id '1-doc';
-function openProject(e) {
-    e.target.id ===  
+// function openProject(e) {
+//     e.target.id ===  
+// }
+
+export default function divJam() {
+
+        const newDiv = document.querySelector('.new-project-div');
+        newDiv.addEventListener('click', function() {
+            alert('ok');
+            let throwaway = mainPanel.removeChild(fragmentsArray[0]);
+
+         })
 }
+
+
+
+
+
+// (async () => {
+    
+// })();
+    
 
 //we don't need all that much
 
